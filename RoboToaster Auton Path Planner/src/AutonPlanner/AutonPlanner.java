@@ -5,21 +5,28 @@
  */
 package AutonPlanner;
 
-
-import robotoaster.auton.path.planner.Path;
+import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
+import robotoaster.auton.path.planner.RoboToasterAutonPathPlanner;
 /**
  *
  * @author Lucas
  */
 public class AutonPlanner extends javax.swing.JFrame {
-
-    Path route = new Path();
+    
+    private Field field;
     /**
      * Creates new form AutonPlanner
      */
     public AutonPlanner() {
+        field = new Field();
+        add(field);
+        pack();
         initComponents();
+        field.setLocation(45, 50);
     }
 
     /**
@@ -31,7 +38,7 @@ public class AutonPlanner extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(700, 700));
@@ -40,45 +47,41 @@ public class AutonPlanner extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(700, 700));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.setMaximumSize(new java.awt.Dimension(700, 700));
-        jPanel1.setMinimumSize(new java.awt.Dimension(700, 700));
-        jPanel1.setName("Field"); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jButton1.setText("Generate Path");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(283, 283, 283)
+                .addComponent(jButton1)
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(680, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void fieldMousePressed(MouseEvent evt){
-        route.insert(evt.getX(), evt.getY());
-    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        RoboToasterAutonPathPlanner generator = new RoboToasterAutonPathPlanner();
+        generator.getDistances(Field.points);
+        generator.convertToInches(generator.distances);
+        generator.getAngles(Field.points);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -115,6 +118,6 @@ public class AutonPlanner extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
